@@ -4,9 +4,13 @@ from fighters import Fighter
 pygame.init()
 
 screen_width = 1000
-screen_height = 600
+screen_height = 600 
 screen = pygame.display.set_mode((screen_width, screen_height)) 
 pygame.display.set_caption("FightingGame101")
+
+#cap framerate
+clock = pygame.time.Clock()
+FPS =  60
 
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
@@ -23,11 +27,14 @@ fighter_2 = Fighter (700, 325)
 #game loop
 run = True
 while run:
+    clock.tick(FPS)
+     
+#draw background
     draw_background()
      
 #move the characters
-    fighter_1.movement()
-    fighter_2.movement()
+    fighter_1.movement(screen_width)
+    #fighter_2.movement()
      
 #draw fighters
     fighter_1.draw(screen)
