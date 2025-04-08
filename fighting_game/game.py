@@ -17,10 +17,15 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0 )
 GREEN = (0, 255, 0)
 
+#define chracter variable
+Samurai_size = 88
+Samurai_data = [Samurai_size]
+Huntress_size = 88
+Huntress_data = [Huntress_size]
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
-#load spritesheets
+#load sheets
 samurai_sheet = pygame.image.load("fighting_game/assets/images/char_1(Samurai)/samurai.png").convert_alpha()
 huntress_sheet = pygame.image.load("fighting_game/assets/images/char_2(brawler)/huntress.png").convert_alpha()
 
@@ -40,8 +45,8 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
-fighter_1 =  Fighter (200, 325, samurai_sheet, Samurai_animation_steps)
-fighter_2 = Fighter (700, 325)
+fighter_1 =  Fighter (200, 325, Samurai_data, samurai_sheet, Samurai_animation_steps)
+fighter_2 = Fighter (700, 325, Huntress_data, huntress_sheet, Huntress_animation_steps )
  
 #game loop
 run = True
@@ -53,7 +58,7 @@ while run:
     draw_healthbar(fighter_1.health, 20, 20)
     draw_healthbar(fighter_2  .health, 580, 20)
 #move the characters
-    fighter_1.movement(screen_width, screen_height, screen, fighter_2 )
+    fighter_1.movement(screen_width, screen_height, screen, fighter_2)
     #fighter_2.movement()
      
 #draw fighters

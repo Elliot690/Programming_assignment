@@ -1,14 +1,27 @@
 import pygame
 
 class Fighter:
-    def __init__(self, x, y):
+    def __init__(self, x, y, data, sprite_sheet, animation_steps):
+        self.size = data[0]
         self.flip = False
+        self.animation_list = self.load_images(sprite_sheet, animation_steps)
         self.rect = pygame.Rect((x, y, 100, 190))
         self.vel_y = 0
         self.jump = False
         self.attacking =  False
         self.attack_type = 0
         self.health = 100
+#extract images from spritesheet
+    def load_images(self, sprite_sheet, animation_steps):
+        animation_list = []
+        for y,  animation in enumerate (animation_steps):
+            temp_img_lists = []
+            for x in range(animation):
+                temp_img = sprite_sheet.subsurface(x * self.size, y * self.size , self.size, self.size)
+                temp_img_lists.append(temp_img)
+            animation_list.append(temp_img_lists)
+        print (animation)
+        return animation_list  
         
 
     # Create movements for the characters
