@@ -20,6 +20,14 @@ GREEN = (0, 255, 0)
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
+#load spritesheets
+samurai_sheet = pygame.image.load("fighting_game/assets/images/char_1(Samurai)/samurai.png").convert_alpha()
+huntress_sheet = pygame.image.load("fighting_game/assets/images/char_2(brawler)/huntress.png").convert_alpha()
+
+#define number of steps in each animation
+Samurai_animation_steps =  [6, 6, 6, 4, 4, 8, 2]  
+Huntress_animation_steps = [8, 8, 7, 5, 5, 8, 2, 2, 3]
+
 #creating a function to draw a bacground
 def draw_background():
     scaled_background = pygame.transform.scale(background_image,(screen_width, screen_height))
@@ -32,7 +40,7 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
-fighter_1 =  Fighter (200, 325)
+fighter_1 =  Fighter (200, 325, samurai_sheet, Samurai_animation_steps)
 fighter_2 = Fighter (700, 325)
  
 #game loop
