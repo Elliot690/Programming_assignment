@@ -18,20 +18,22 @@ RED = (255, 0, 0 )
 GREEN = (0, 255, 0)
 
 #define chracter variable
-Samurai_size = 88
-Samurai_data = [Samurai_size]
-Huntress_size = 88
-Huntress_data = [Huntress_size]
+Samurai_size = 162
+Samurai_scale = 4
+Samurai_data = [Samurai_size, Samurai_scale]
+Huntress_size = 250
+Huntress_scale = 4
+Huntress_data = [Huntress_size, Huntress_scale] 
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
 #load sheets
-samurai_sheet = pygame.image.load("fighting_game/assets/images/char_1(Samurai)/samurai.png").convert_alpha()
-huntress_sheet = pygame.image.load("fighting_game/assets/images/char_2(brawler)/huntress.png").convert_alpha()
+samurai_sheet = pygame.image.load("fighting_game/assets/images/char_1(Samurai)/warrior.png").convert_alpha()
+huntress_sheet = pygame.image.load("fighting_game/assets/images/char_2(brawler)/wizard.png").convert_alpha()
 
 #define number of steps in each animation
-Samurai_animation_steps =  [6, 6, 6, 4, 4, 8, 2]  
-Huntress_animation_steps = [8, 8, 7, 5, 5, 8, 2, 2, 3]
+Samurai_animation_steps =  [10, 8, 1, 7, 7, 3, 7]  
+Huntress_animation_steps = [8, 8, 1, 8, 8, 3, 7]
 
 #creating a function to draw a bacground
 def draw_background():

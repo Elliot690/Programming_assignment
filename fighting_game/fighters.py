@@ -3,8 +3,12 @@ import pygame
 class Fighter:
     def __init__(self, x, y, data, sprite_sheet, animation_steps):
         self.size = data[0]
+        self.image_scale = data[1] 
         self.flip = False
         self.animation_list = self.load_images(sprite_sheet, animation_steps)
+        self.action = 0
+        self.frame_index = 0 
+        self.image = self.animation_list[self.action][self.frame_index ]
         self.rect = pygame.Rect((x, y, 100, 190))
         self.vel_y = 0
         self.jump = False
@@ -18,9 +22,8 @@ class Fighter:
             temp_img_lists = []
             for x in range(animation):
                 temp_img = sprite_sheet.subsurface(x * self.size, y * self.size , self.size, self.size)
-                temp_img_lists.append(temp_img)
+                temp_img_lists.append(pygame.transform.scale(temp_img, (self.size * self.image_scale, self.size * self.image_scale)))
             animation_list.append(temp_img_lists)
-        print (animation)
         return animation_list  
         
 
@@ -80,7 +83,7 @@ class Fighter:
 
     def attack(self, surface, target):
         self.attacking = True
-        attacking_rect = pygame.Rect(self.rect.centerx - (2* self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
+        attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
         if attacking_rect.colliderect(target.rect):
             target.health -= 7.5  
     
@@ -89,3 +92,4 @@ class Fighter:
     # Draw rectangles for the characters' hit-boxes 
     def draw(self, surface):
         pygame.draw.rect(surface, (255, 0, 0), self.rect)
+        surface.blit(self.image, (self.rect.x, self.rect.y))
