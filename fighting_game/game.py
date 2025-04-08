@@ -12,6 +12,11 @@ pygame.display.set_caption("FightingGame101")
 clock = pygame.time.Clock()
 FPS =  60
 
+#define colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 0 )
+GREEN = (0, 255, 0)
+
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
@@ -20,6 +25,12 @@ def draw_background():
     scaled_background = pygame.transform.scale(background_image,(screen_width, screen_height))
     screen.blit(scaled_background, (0, 0)) 
 
+#function for drawing the characters' healthbars
+def draw_healthbar(health, x, y):
+    ratio = health / 100
+    pygame.draw.rect(screen, WHITE, (x- 1, y-1, 403, 33 ))
+    pygame.draw.rect(screen, RED, (x, y, 400, 30))
+    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
 fighter_1 =  Fighter (200, 325)
 fighter_2 = Fighter (700, 325)
@@ -27,13 +38,14 @@ fighter_2 = Fighter (700, 325)
 #game loop
 run = True
 while run:
-    clock.tick(FPS)
-     
+    clock.tick(FPS)  
 #draw background
     draw_background()
-     
+#display character's healthbar
+    draw_healthbar(fighter_1.health, 20, 20)
+    draw_healthbar(fighter_2  .health, 580, 20)
 #move the characters
-    fighter_1.movement(screen_width)
+    fighter_1.movement(screen_width, screen_height, screen, fighter_2 )
     #fighter_2.movement()
      
 #draw fighters
