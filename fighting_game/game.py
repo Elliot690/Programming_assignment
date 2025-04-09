@@ -63,6 +63,7 @@ while run:
     draw_healthbar(fighter_2.health, 580, 20)
 #move the characters
     fighter_1.movement(screen_width, screen_height, screen, fighter_2) 
+    fighter_2.movement(screen_width, screen_height, screen, fighter_1)
      #fighter_2.movement()
     
 #update the characters
