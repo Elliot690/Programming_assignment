@@ -20,6 +20,7 @@ class Fighter:
         self.attack_cooldown = 0
         self.hit = False
         self.health = 100
+        self.alive = False
 
 #extract images from spritesheet
     def load_images(self, sprite_sheet, animation_steps):
@@ -96,7 +97,11 @@ class Fighter:
 #handle animations' updates
     def update(self):
 #check what action the player is performing
-        if self.hit == True:
+        if self.health <= 0:
+            self.health = 0
+            self.alive = False
+            self.update_action(6)
+        elif self.hit == True:
             self.update_action(5)
         elif self.attacking == True:
             if self.attack_type == 1:
@@ -122,6 +127,12 @@ class Fighter:
             if self.action == 3 or self.action == 4:
                 self.attacking = False  
                 self.attack_cooldown = 50
+        #check if damage was taken
+            if self.action == 50:
+                self.hit = False
+        #if the player is in the middle of the attack, the attack then stops
+                self.attacking = False
+                self.attack_cooldown = 20
             
     def attack(self, surface, target):
         if self.attack_cooldown   == 0:
