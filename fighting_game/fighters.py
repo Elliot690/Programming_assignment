@@ -18,6 +18,7 @@ class Fighter:
         self.attacking =  False
         self.attack_type = 0
         self.attack_cooldown = 0
+        self.hit = False
         self.health = 100
 
 #extract images from spritesheet
@@ -95,7 +96,9 @@ class Fighter:
 #handle animations' updates
     def update(self):
 #check what action the player is performing
-        if self.attacking == True:
+        if self.hit == True:
+            self.update_action(5)
+        elif self.attacking == True:
             if self.attack_type == 1:
                self.update_action(3)
             elif self.attack_type == 2:
@@ -107,7 +110,7 @@ class Fighter:
         else:
             self.update_action(0)
 
-        animation_cooldown = 27
+        animation_cooldown = 47
         self.image = self.animation_list[self.action][self.frame_index]
         #check if enough time has passed since last update
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
@@ -125,7 +128,8 @@ class Fighter:
             self.attacking = True
             attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
             if attacking_rect.colliderect(target.rect):
-                target.health -= 1
+                target.health -= 8
+                target.hit = True
             pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
     def update_action(self, new_action):
