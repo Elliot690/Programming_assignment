@@ -58,13 +58,13 @@ class Fighter:
                 self.vel_y = -30
                 self.jump = True
             #add attacking
-            if key[pygame.K_x] or key[pygame.K_c]:
-                self.attack(surface, target)
-            #determine which type of attack is being used
+            if self.attack_cooldown == 0:
                 if key[pygame.K_x]:
-                    self.attack_type = 1
-                if  key[pygame.K_c]:
-                    self.attack_type = 2
+                    self.attack_type = 1                    # ✅ FIXED: moved before attack()
+                    self.attack(surface, target)            # ✅ FIXED: now runs with correct attack_type
+                elif key[pygame.K_c]:
+                    self.attack_type = 2                    # ✅ FIXED: moved before attack()
+                    self.attack(surface, target)
         
         #Apply gravity
         self.vel_y += GRAVITY  
@@ -81,7 +81,7 @@ class Fighter:
             dy = screen_height - 95 - self.rect.bottom
         
         #Ensure characters face each others
-        if target.rect.centerx > self.rect.centerx :
+        if target.rect.centerx > self.rect.centerx:
             self.flip = False 
         else:
              self.flip = True
@@ -107,7 +107,7 @@ class Fighter:
         else:
             self.update_action(0)
 
-        animation_cooldown = 100
+        animation_cooldown = 27
         self.image = self.animation_list[self.action][self.frame_index]
         #check if enough time has passed since last update
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
@@ -116,12 +116,12 @@ class Fighter:
         #check if the animation has finished
         if self.frame_index >= len(self.animation_list[self.action]):
             self.frame_index = 0
-        if self.action == 3 or self.action == 4:
-            self.attacking = False
-            self.attack_cooldown = 80
+            if self.action == 3 or self.action == 4:
+                self.attacking = False  
+                self.attack_cooldown = 50
             
     def attack(self, surface, target):
-        if self.attack_cooldown == 0:
+        if self.attack_cooldown   == 0:
             self.attacking = True
             attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
             if attacking_rect.colliderect(target.rect):
