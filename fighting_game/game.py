@@ -20,10 +20,12 @@ GREEN = (0, 255, 0)
 #define chracter variable
 Samurai_size = 162
 Samurai_scale = 4
-Samurai_data = [Samurai_size, Samurai_scale]
+Samurai_offset = [68, 55]
+Samurai_data = [Samurai_size, Samurai_scale, Samurai_offset]
 Huntress_size = 250
-Huntress_scale = 4
-Huntress_data = [Huntress_size, Huntress_scale] 
+Huntress_scale = 3.43 
+Huntress_offset = [109, 112]
+Huntress_data = [Huntress_size, Huntress_scale, Huntress_offset] 
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
@@ -47,8 +49,8 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
-fighter_1 =  Fighter (200, 325, Samurai_data, samurai_sheet, Samurai_animation_steps)
-fighter_2 = Fighter (700, 325, Huntress_data, huntress_sheet, Huntress_animation_steps )
+fighter_1 =  Fighter (200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
+fighter_2 = Fighter (700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps )
  
 #game loop
 run = True
@@ -58,11 +60,15 @@ while run:
     draw_background()
 #display character's healthbar
     draw_healthbar(fighter_1.health, 20, 20)
-    draw_healthbar(fighter_2  .health, 580, 20)
+    draw_healthbar(fighter_2.health, 580, 20)
 #move the characters
     fighter_1.movement(screen_width, screen_height, screen, fighter_2)
     #fighter_2.movement()
-     
+    
+#update the characters
+    fighter_1.update()
+    fighter_2.update()
+
 #draw fighters
     fighter_1.draw(screen)
     fighter_2.draw(screen)
