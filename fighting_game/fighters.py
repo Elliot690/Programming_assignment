@@ -65,33 +65,33 @@ class Fighter:
                 #add attacking
                 if self.attack_cooldown == 0:
                     if key[pygame.K_x]:
-                        self.attack_type = 1                    # ✅ FIXED: moved before attack()
-                        self.attack(surface, target)            # ✅ FIXED: now runs with correct attack_type
+                        self.attack_type = 1                    
+                        self.attack(surface, target)            
                     elif key[pygame.K_c]:
-                        self.attack_type = 2                    # ✅ FIXED: moved before attack()
+                        self.attack_type = 2                    
                         self.attack(surface, target)
 
 
             #check player 2 controls
-            if self.player == 1:
+            if self.player == 2:
                 # Movements (move left and right)   
-                if key[pygame.K_a]:
+                if key[pygame.K_j]:
                     dx = -movement_speed
                     self.running = True
-                if key[pygame.K_d]:
+                if key[pygame.K_l]:
                     dx = movement_speed 
                     self.running = True
                 #Jumping
-                if key[pygame.K_w] and self.jump == False:
+                if key[pygame.K_i] and self.jump == False:
                     self.vel_y = -30
                     self.jump = True
                 #add attacking
                 if self.attack_cooldown == 0:
-                    if key[pygame.K_x]:
-                        self.attack_type = 1                    # ✅ FIXED: moved before attack()
-                        self.attack(surface, target)            # ✅ FIXED: now runs with correct attack_type
-                    elif key[pygame.K_c]:
-                        self.attack_type = 2                    # ✅ FIXED: moved before attack()
+                    if key[pygame.K_n]:
+                        self.attack_type = 1                    
+                        self.attack(surface, target)            
+                    elif key[pygame.K_m]:
+                        self.attack_type = 2                    
                         self.attack(surface, target) 
 
 
