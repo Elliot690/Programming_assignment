@@ -49,8 +49,8 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
-fighter_1 =  Fighter (200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
-fighter_2 = Fighter (700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps )
+fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
+fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps )
  
 #game loop
 run = True

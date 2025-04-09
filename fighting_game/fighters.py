@@ -1,7 +1,8 @@
 import pygame
 
 class Fighter:
-    def __init__(self, x, y, flip, data, sprite_sheet, animation_steps):
+    def __init__(self, player, x, y, flip, data, sprite_sheet, animation_steps):
+        self.player = player
         self.size = data[0]
         self.image_scale = data[1] 
         self.offset = data[2]
@@ -48,25 +49,53 @@ class Fighter:
 
         #Can only perform other actions if not currently attacking  
         if self.attacking == False:
-            # Movements (move left and right)   
-            if key[pygame.K_a]:
-                dx = -movement_speed
-                self.running = True
-            if key[pygame.K_d]:
-                dx = movement_speed 
-                self.running = True
-            #Jumping
-            if key[pygame.K_w] and self.jump == False:
-                self.vel_y = -30
-                self.jump = True
-            #add attacking
-            if self.attack_cooldown == 0:
-                if key[pygame.K_x]:
-                    self.attack_type = 1                    # ✅ FIXED: moved before attack()
-                    self.attack(surface, target)            # ✅ FIXED: now runs with correct attack_type
-                elif key[pygame.K_c]:
-                    self.attack_type = 2                    # ✅ FIXED: moved before attack()
-                    self.attack(surface, target)
+        #check player 1 controls
+            if self.player == 1:
+                # Movements (move left and right)   
+                if key[pygame.K_a]:
+                    dx = -movement_speed
+                    self.running = True
+                if key[pygame.K_d]:
+                    dx = movement_speed 
+                    self.running = True
+                #Jumping
+                if key[pygame.K_w] and self.jump == False:
+                    self.vel_y = -30
+                    self.jump = True
+                #add attacking
+                if self.attack_cooldown == 0:
+                    if key[pygame.K_x]:
+                        self.attack_type = 1                    # ✅ FIXED: moved before attack()
+                        self.attack(surface, target)            # ✅ FIXED: now runs with correct attack_type
+                    elif key[pygame.K_c]:
+                        self.attack_type = 2                    # ✅ FIXED: moved before attack()
+                        self.attack(surface, target)
+
+
+            #check player 2 controls
+            if self.player == 1:
+                # Movements (move left and right)   
+                if key[pygame.K_a]:
+                    dx = -movement_speed
+                    self.running = True
+                if key[pygame.K_d]:
+                    dx = movement_speed 
+                    self.running = True
+                #Jumping
+                if key[pygame.K_w] and self.jump == False:
+                    self.vel_y = -30
+                    self.jump = True
+                #add attacking
+                if self.attack_cooldown == 0:
+                    if key[pygame.K_x]:
+                        self.attack_type = 1                    # ✅ FIXED: moved before attack()
+                        self.attack(surface, target)            # ✅ FIXED: now runs with correct attack_type
+                    elif key[pygame.K_c]:
+                        self.attack_type = 2                    # ✅ FIXED: moved before attack()
+                        self.attack(surface, target) 
+
+
+
         
         #Apply gravity
         self.vel_y += GRAVITY  
@@ -115,7 +144,7 @@ class Fighter:
         else:
             self.update_action(0)
 
-        animation_cooldown = 30
+        animation_cooldown = 53
         self.image = self.animation_list[self.action][self.frame_index]
         #check if enough time has passed since last update
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
@@ -123,16 +152,20 @@ class Fighter:
             self.update_time = pygame.time.get_ticks()
         #check if the animation has finished
         if self.frame_index >= len(self.animation_list[self.action]):
-            self.frame_index = 0
-            if self.action == 3 or self.action == 4:
-                self.attacking = False  
-                self.attack_cooldown = 50
-        #check if damage was taken
-            if self.action == 5:
-                self.hit = False
-        #if the player is in the middle of the attack, the attack then stops
-                self.attacking = False
-                self.attack_cooldown = 20
+        #check if the player is death then end the animation
+            if self.alive == False:
+                self.frame_index = len(self.animation_list[self.action]) - 1
+            else:
+                self.frame_index = 0
+                if self.action == 3 or self.action == 4:
+                    self.attacking = False  
+                    self.attack_cooldown = 50
+            #check if damage was taken
+                if self.action == 5:
+                    self.hit = False
+            #if the player is in the middle of the attack, the attack then stops
+                    self.attacking = False
+                    self.attack_cooldown = 20
             
     def attack(self, surface, target):
         if self.attack_cooldown   == 0:
