@@ -20,7 +20,7 @@ class Fighter:
         self.attack_cooldown = 0
         self.hit = False
         self.health = 100
-        self.alive = False
+        self.alive = True
 
 #extract images from spritesheet
     def load_images(self, sprite_sheet, animation_steps):
@@ -115,7 +115,7 @@ class Fighter:
         else:
             self.update_action(0)
 
-        animation_cooldown = 47
+        animation_cooldown = 30
         self.image = self.animation_list[self.action][self.frame_index]
         #check if enough time has passed since last update
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
@@ -128,7 +128,7 @@ class Fighter:
                 self.attacking = False  
                 self.attack_cooldown = 50
         #check if damage was taken
-            if self.action == 50:
+            if self.action == 5:
                 self.hit = False
         #if the player is in the middle of the attack, the attack then stops
                 self.attacking = False
