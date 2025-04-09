@@ -17,6 +17,7 @@ class Fighter:
         self.jump = False
         self.attacking =  False
         self.attack_type = 0
+        self.attack_cooldown = 0
         self.health = 100
 
 #extract images from spritesheet
@@ -38,6 +39,7 @@ class Fighter:
         dx = 0
         dy = 0
         self.running = False
+        self.attack_type = 0 
 
         # Get inputs from pressing keys (key-presses)
         key = pygame.key.get_pressed()
@@ -59,9 +61,9 @@ class Fighter:
             if key[pygame.K_x] or key[pygame.K_c]:
                 self.attack(surface, target)
             #determine which type of attack is being used
-                if key[pygame.K_r]:
+                if key[pygame.K_x]:
                     self.attack_type = 1
-                if  key[pygame.K_t]:
+                if  key[pygame.K_c]:
                     self.attack_type = 2
         
         #Apply gravity
@@ -83,7 +85,9 @@ class Fighter:
             self.flip = False 
         else:
              self.flip = True
-
+        #apply attack cooldown
+        if self.attack_cooldown > 0:
+         self.attack_cooldown -= 1
         # Update players' movements from key-presses
         self.rect.x += dx
         self.rect.y += dy 
@@ -91,12 +95,17 @@ class Fighter:
 #handle animations' updates
     def update(self):
 #check what action the player is performing
-        if self.jump == True:
+        if self.attacking == True:
+            if self.attack_type == 1:
+               self.update_action(3)
+            elif self.attack_type == 2:
+                self.update_action(4)
+        elif self.jump == True:
             self.update_action(2)
-        if self.running == True:
+        elif self.running == True:
             self.update_action(1)
         else:
-            self.update_action(1)
+            self.update_action(0)
 
         animation_cooldown = 100
         self.image = self.animation_list[self.action][self.frame_index]
@@ -107,16 +116,17 @@ class Fighter:
         #check if the animation has finished
         if self.frame_index >= len(self.animation_list[self.action]):
             self.frame_index = 0
-
-
+        if self.action == 3 or self.action == 4:
+            self.attacking = False
+            self.attack_cooldown = 80
             
     def attack(self, surface, target):
-        self.attacking = True
-        attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
-        if attacking_rect.colliderect(target.rect):
-            target.health -= 7.5  
-    
-        pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
+        if self.attack_cooldown == 0:
+            self.attacking = True
+            attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
+            if attacking_rect.colliderect(target.rect):
+                target.health -= 1
+            pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
     def update_action(self, new_action):
     #check if the new action ius different ot previous one
