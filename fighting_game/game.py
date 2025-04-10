@@ -42,8 +42,13 @@ Samurai_animation_steps =  [10, 8, 1, 7, 7, 3, 7]
 Huntress_animation_steps = [8, 8, 1, 8, 8, 3, 7]
 
 #define fonts
-count_font = pygame.font.Font("fighting_game,/assets/fonts/font.ttf, 80")
-count_font = pygame.font.Font("fighting_game,/assets/fonts/font.ttf, 30")
+count_font = pygame.font.Font("fighting_game/assets/fonts/font.ttf", 80)
+score_font = pygame.font.Font("fighting_game/assets/fonts/font.ttf", 30)
+
+#function fir frawing text 
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    screen.blit(img, (x, y))
 
 #creating a function to draw a background
 def draw_background():
@@ -75,6 +80,8 @@ while run:
       fighter_1.movement(screen_width, screen_height, screen, fighter_2) 
       fighter_2.movement(screen_width, screen_height, screen, fighter_1)
     else:
+        #display countdown
+        draw_text(str(intro_count), count_font, RED, screen_width / 2, screen_height / 3)
         #update count timer
         if (pygame.time.get_ticks() - last_count_update) >= 1000:
             intro_count -= 1
