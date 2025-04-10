@@ -41,7 +41,11 @@ huntress_sheet = pygame.image.load("fighting_game/assets/images/char_2(brawler)/
 Samurai_animation_steps =  [10, 8, 1, 7, 7, 3, 7]  
 Huntress_animation_steps = [8, 8, 1, 8, 8, 3, 7]
 
-#creating a function to draw a bacground
+#define fonts
+count_font = pygame.font.Font("fighting_game,/assets/fonts/font.ttf, 80")
+count_font = pygame.font.Font("fighting_game,/assets/fonts/font.ttf, 30")
+
+#creating a function to draw a background
 def draw_background():
     scaled_background = pygame.transform.scale(background_image,(screen_width, screen_height))
     screen.blit(scaled_background, (0, 0)) 
@@ -62,7 +66,7 @@ while run:
     clock.tick(FPS)  
 #draw background
     draw_background()
-#display character's healthbar
+#display character's healthbar 
     draw_healthbar(fighter_1.health, 20, 20)
     draw_healthbar(fighter_2.health, 580, 20)
 #update countdown
@@ -71,8 +75,11 @@ while run:
       fighter_1.movement(screen_width, screen_height, screen, fighter_2) 
       fighter_2.movement(screen_width, screen_height, screen, fighter_1)
     else:
-        
-    print(intro_count)
+        #update count timer
+        if (pygame.time.get_ticks() - last_count_update) >= 1000:
+            intro_count -= 1
+            last_count_update = pygame.time.get_ticks()      
+        print(intro_count)
     
 #update the characters
     fighter_1.update()
