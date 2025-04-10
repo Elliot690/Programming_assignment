@@ -36,7 +36,7 @@ class Fighter:
         
 
     # Create movements for the characters
-    def movement(self, screen_width, screen_height, surface, target):
+    def movement(self, screen_width, screen_height, surface, target, round_over):
         movement_speed = 8
         GRAVITY = 2
         dx = 0
@@ -48,7 +48,7 @@ class Fighter:
         key = pygame.key.get_pressed()
 
         #Can only perform other actions if not currently attacking  
-        if self.attacking == False and self.alive == True:
+        if self.attacking == False and self.alive == True and round_over == False:
         #check player 1 controls
             if self.player == 1:
                 # Movements (move left and right)   
@@ -66,10 +66,10 @@ class Fighter:
                 if self.attack_cooldown == 0:
                     if key[pygame.K_x]:
                         self.attack_type = 1                    
-                        self.attack(surface, target)            
+                        self.attack(target)            
                     elif key[pygame.K_c]:
                         self.attack_type = 2                    
-                        self.attack(surface, target)
+                        self.attack(target)
 
 
             #check player 2 controls
@@ -167,14 +167,13 @@ class Fighter:
                     self.attacking = False
                     self.attack_cooldown = 20
             
-    def attack(self, surface, target):
+    def attack(self, target):
         if self.attack_cooldown   == 0:
             self.attacking = True
-            attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.5 * self.rect.width, self.rect.height)
+            attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 1.65 * self.rect.width, self.rect.height)
             if attacking_rect.colliderect(target.rect):
                 target.health -= 8
                 target.hit = True
-            pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
     def update_action(self, new_action):
     #check if the new action ius different ot previous one
@@ -188,5 +187,4 @@ class Fighter:
     # Draw rectangles for the characters' hit-boxes 
     def draw(self, surface):
         img = pygame.transform.flip(self.image, self.flip, False)
-        pygame.draw.rect(surface, (255, 0, 0), self.rect)
         surface.blit(img, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))

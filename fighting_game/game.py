@@ -81,12 +81,14 @@ while run:
 #display character's healthbar 
     draw_healthbar(fighter_1.health, 20, 20)
     draw_healthbar(fighter_2.health, 580, 20)
+    draw_text("P1: "+ str(score[0]), score_font, RED, 20, 60)
+    draw_text("P2: " + str(score[1]), score_font, RED, 580, 60)
 
 #update countdown
     if intro_count <= 0:
         #move the characters
-      fighter_1.movement(screen_width, screen_height, screen, fighter_2) 
-      fighter_2.movement(screen_width, screen_height, screen, fighter_1)
+      fighter_1.movement(screen_width, screen_height, screen, fighter_2, round_over) 
+      fighter_2.movement(screen_width, screen_height, screen, fighter_1, round_over)
     else:
         #display countdown
         draw_text(str(intro_count), count_font, RED, screen_width / 2, screen_height / 3)
