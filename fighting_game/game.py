@@ -17,6 +17,10 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0 )
 GREEN = (0, 255, 0)
 
+#define game variables
+intro_count = 3
+last_count_update = pygame.time.get_ticks()
+
 #define chracter variable
 Samurai_size = 162
 Samurai_scale = 4
@@ -61,10 +65,14 @@ while run:
 #display character's healthbar
     draw_healthbar(fighter_1.health, 20, 20)
     draw_healthbar(fighter_2.health, 580, 20)
-#move the characters
-    fighter_1.movement(screen_width, screen_height, screen, fighter_2) 
-    fighter_2.movement(screen_width, screen_height, screen, fighter_1)
-     #fighter_2.movement()
+#update countdown
+    if intro_count <= 0:
+        #move the characters
+      fighter_1.movement(screen_width, screen_height, screen, fighter_2) 
+      fighter_2.movement(screen_width, screen_height, screen, fighter_1)
+    else:
+        
+    print(intro_count)
     
 #update the characters
     fighter_1.update()
