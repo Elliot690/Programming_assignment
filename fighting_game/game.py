@@ -20,6 +20,9 @@ GREEN = (0, 255, 0)
 #define game variables
 intro_count = 3
 last_count_update = pygame.time.get_ticks()
+score = [0, 0]
+round_over = False
+ROUND_OVER_COOLDOWN = 2000 
 
 #define chracter variable
 Samurai_size = 162
@@ -95,6 +98,13 @@ while run:
 #draw fighters
     fighter_1.draw(screen)
     fighter_2.draw(screen)
+
+#check if the chracter dies
+if round_over == False:
+    if fighter_1.alive == False:
+        score[1] += 1
+        round_over = True
+        round_over_time = pygame.get_ticks()
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
