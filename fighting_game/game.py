@@ -26,10 +26,10 @@ round_over = False
 ROUND_OVER_COOLDOWN = 2000 
 
 #define chracter variable
-Samurai_size = 162
-Samurai_scale = 4
-Samurai_offset = [68, 55]
-Samurai_data = [Samurai_size, Samurai_scale, Samurai_offset]
+Knight_size = 162
+Knight_scale = 4
+Knight_offset = [68, 55]
+Knight_data = [Knight_size, Knight_scale, Knight_offset]
 Huntress_size = 250
 Huntress_scale = 3.43 
 Huntress_offset = [109, 112]
@@ -47,11 +47,11 @@ magic_fx.set_volume(0.75)
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
 #load sheets
-samurai_sheet = pygame.image.load("fighting_game/assets/images/char_1(Samurai)/warrior.png").convert_alpha()
+knight_sheet = pygame.image.load("fighting_game/assets/images/char_1(Knight)/knight.png").convert_alpha()
 huntress_sheet = pygame.image.load("fighting_game/assets/images/char_2(brawler)/wizard.png").convert_alpha()
 
 #define number of steps in each animation
-Samurai_animation_steps =  [10, 8, 1, 7, 7, 3, 7]  
+Knight_animation_steps =  [10, 8, 1, 7, 7, 3, 7]  
 Huntress_animation_steps = [8, 8, 1, 8, 8, 3, 7]
 
 #define fonts
@@ -77,7 +77,7 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
-fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps, sword_fx)
+fighter_1 =  Fighter (1, 200, 325, False, Knight_data, knight_sheet, Knight_animation_steps, sword_fx)
 fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps, magic_fx)
  
 #game loop
@@ -131,7 +131,7 @@ while run:
         if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
             round_over = False
             intro_count = 3
-            fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps, sword_fx)
+            fighter_1 =  Fighter (1, 200, 325, False, Knight_data, knight_sheet, Knight_animation_steps, sword_fx)
             fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps, magic_fx)
     
     for event in pygame.event.get():
