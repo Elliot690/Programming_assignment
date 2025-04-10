@@ -1,5 +1,6 @@
 import pygame 
 from fighters import Fighter
+from pygame import mixer
 
 pygame.init()
 
@@ -33,6 +34,15 @@ Huntress_size = 250
 Huntress_scale = 3.43 
 Huntress_offset = [109, 112]
 Huntress_data = [Huntress_size, Huntress_scale, Huntress_offset] 
+
+#load music and sounds
+pygame.mixer.music.load("fighting_game/assets/audio/music.mp3")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1, 0.0, 5000)
+sword_fx = pygame.mixer.Sound("fighting_game/assets/audio/sword.wav")
+magic_fx = pygame.mixer.Sound("fighting_game/assets/audio/magic.wav")
+magic_fx.set_volume(0.75)
+
 #load background image
 background_image = pygame.image.load("fighting_game/assets/images/background/background.jpg").convert_alpha()
 
@@ -67,8 +77,8 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
-fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
-fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps)
+fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps, sword_fx)
+fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps, magic_fx)
  
 #game loop
 run = True
@@ -121,8 +131,8 @@ while run:
         if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
             round_over = False
             intro_count = 3
-            fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
-            fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps)
+            fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps, sword_fx)
+            fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps, magic_fx)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
