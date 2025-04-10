@@ -66,17 +66,20 @@ def draw_healthbar(health, x, y):
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio , 30 ))
 #create two chracters 
 fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
-fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps )
+fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps)
  
 #game loop
 run = True
 while run:
     clock.tick(FPS)  
+
 #draw background
     draw_background()
+
 #display character's healthbar 
     draw_healthbar(fighter_1.health, 20, 20)
     draw_healthbar(fighter_2.health, 580, 20)
+
 #update countdown
     if intro_count <= 0:
         #move the characters
@@ -89,7 +92,6 @@ while run:
         if (pygame.time.get_ticks() - last_count_update) >= 1000:
             intro_count -= 1
             last_count_update = pygame.time.get_ticks()      
-        print(intro_count)
     
 #update the characters
     fighter_1.update()
@@ -100,15 +102,18 @@ while run:
     fighter_2.draw(screen)
 
 #check if the chracter dies
-if round_over == False:
-    if fighter_1.alive == False:
-        score[1] += 1
-        round_over = True
-        round_over_time = pygame.get_ticks()
+    if round_over == False:
+        if fighter_1.alive == False:
+            score[1] += 1
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+        elif fighter_2.alive == False:
+            score[0] += 1
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
     
     pygame.display.update()
- 
