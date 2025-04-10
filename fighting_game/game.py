@@ -49,7 +49,7 @@ count_font = pygame.font.Font("fighting_game/assets/fonts/font.ttf", 80)
 score_font = pygame.font.Font("fighting_game/assets/fonts/font.ttf", 30)
 
 #load victory image
-victory_img = pygame.image.load("fighting_game/assets/icon/victory.png")
+victory_img = pygame.image.load("fighting_game/assets/images/icon/victory.png")
 #function fir frawing text 
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
@@ -114,6 +114,13 @@ while run:
             round_over = True
             round_over_time = pygame.time.get_ticks()
     else:
+        #display victory image
+        screen.blit(victory_img, (360, 150))
+        if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
+            round_over = False
+            intro_count = 3
+            fighter_1 =  Fighter (1, 200, 325, False, Samurai_data, samurai_sheet, Samurai_animation_steps)
+            fighter_2 = Fighter (2, 700, 320, True, Huntress_data, huntress_sheet, Huntress_animation_steps)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
